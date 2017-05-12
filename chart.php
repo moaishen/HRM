@@ -14,9 +14,23 @@ $sql_1 = "SELECT SUM(CASE WHEN sex = '男' THEN 1 ELSE 0 END)/count(*)*100 AS 'm
 
 $result1 = $conn->query($sql_1) or die("SQL查询失败");
 
+$sql_2 = "SELECT
+SUM(CASE WHEN degree = '小学'THEN 1 ELSE 0 END) AS 'l1',
+SUM(CASE WHEN degree = '初中'THEN 1 ELSE 0 END) AS 'l2',
+SUM(CASE WHEN degree = '中专'THEN 1 ELSE 0 END) AS 'l3',
+SUM(CASE WHEN degree = '高中'THEN 1 ELSE 0 END) AS 'l4',
+SUM(CASE WHEN degree = '大学专科'THEN 1 ELSE 0 END) AS 'l5',
+SUM(CASE WHEN degree = '大学本科'THEN 1 ELSE 0 END) AS 'l6',
+SUM(CASE WHEN degree = '研究生'THEN 1 ELSE 0 END) AS 'l7',
+SUM(CASE WHEN degree = '硕士'THEN 1 ELSE 0 END) AS 'l8',
+SUM(CASE WHEN degree = '博士'THEN 1 ELSE 0 END) AS 'l9',
+SUM(CASE WHEN degree = '在读'THEN 1 ELSE 0 END) AS 'l0'
+FROM `tbl_employee`";
 
+$result2 = $conn->query($sql_2) or die("SQL查询失败");
 
 //while($row1 = $result1->fetch_assoc()){
+
 
 ?>
 
@@ -29,7 +43,7 @@ $result1 = $conn->query($sql_1) or die("SQL查询失败");
     require "includes/link.inc.php";
     ?>
     <script src="js/highcharts.js"></script>
-
+    <link rel="stylesheet" href="styles/chart.css">
 </head>
 <body>
 
@@ -43,68 +57,23 @@ if(!isset($_COOKIE['username'])){
 require "includes/header.inc.php";
 ?>
 
-    <div id="chart1" style="width: 450px;height: 300px;margin:60px auto"></div>
+    <div id="chart1"></div>
+    <div id="chart2"></div>
 
 
 
+<?php
+require "includes/chart1.inc.php";
+require "includes/chart2.inc.php";
 
-<script>
-    $(document).ready(function() {
-        var chart = {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        };
-        var title = {
-            text: '当前公司男女比例饼状图'
-        };
-        var tooltip = {
-            pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
-        };
-        var plotOptions = {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.2f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        };
-        var series= [{
-            type: 'pie',
-            name: '人数占比',
-            data: [
-//                ['Firefox',   45.0],
-//                ['IE',       26.8],
-//                ['Chrome',  12.8],
-//                ['Safari',    8.5],
-//                ['Opera',     6.2],
-//                ['Others',   0.7]
 
-                <?php
-                $row1 = $result1->fetch_assoc();
-                echo '[\'男性\','.$row1['man'].'],[\'女性\','.$row1['woman'].']';
+$conn->close();
 
-                $conn->close();
 
-                ?>
 
-            ]
-        }];
+require "includes/footer.inc.php";
 
-        var json = {};
-        json.chart = chart;
-        json.title = title;
-        json.tooltip = tooltip;
-        json.series = series;
-        json.plotOptions = plotOptions;
-        $('#chart1').highcharts(json);
-    });
-</script>
+?>
 
 </body>
 </html>
