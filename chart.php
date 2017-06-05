@@ -56,6 +56,15 @@ if(!isset($_COOKIE['username'])){
 
 require "includes/header.inc.php";
 ?>
+<div class="container">
+    <div class="jumbotron">
+        <hgroup>
+            <h2>下图反映当前公司人员的各维度配置情况。</h2>
+            <!--            <h4>如果需要账号，请直接联系管理员。</h4>-->
+        </hgroup>
+    </div>
+</div>
+
 
     <div id="chart1"></div>
     <div id="chart2"></div>

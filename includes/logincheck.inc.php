@@ -6,19 +6,30 @@
  * Time: 13:23
  */
 
+require "database.inc.php";
 
-if(@$_POST['login'] == 'true'){
+if(@$_POST['login'] == 'true') {
 
-    if(!(@$_POST['username'] == "admin" && @$_POST['password'] == "admin" )){
-        echo '<h1>:(</h1><br>用户名和密码错误，请返回重新登录！';
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM `tbl_user` WHERE username = '{$username}'";
+    $result = $conn->query($sql) or die("数据库查询错误！") ;
+
+    if (!!$result) {
+        $row = $result->fetch_assoc();
+        if ($password == $row['password']) {
+            //    设置cookies验证登录
+            setcookie('level', $row['level']);
+            setcookie('username',$username);
+        } else {
+            echo '<h1>:(</h1><br>密码错误，请返回重新登录！';
+            exit();
+        }
+    } else {
+        echo '<h1>:(</h1><br>用户名错误，请返回重新登录！';
         exit();
-    }else{
-        //    设置cookies验证登录
-        setcookie('username',$_POST['username']);
     }
-}else{
-    echo '<h1>:(</h1><br>你还没有登录，请返回重新登录！';
-    exit();
 }
 
 ?>

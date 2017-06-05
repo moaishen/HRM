@@ -6,18 +6,18 @@
  * Time: 10:16
  */
 
-//连接数据库
-define("db_host","localhost");
-define("db_user","root");
-define("db_password","123456");
-define("db_database","tophrm");
+require 'database.inc.php';
 
-$conn = mysqli_connect(db_host,db_user,db_password,db_database) or die("数据库连接失败");
 
-//重要！！设置字符编码！
-$conn->query('SET NAMES UTF8') or die('字符编码错误！');
+if(isset($_COOKIE['level'])){
+    $level = $_COOKIE['level'];
+    if($level == 'all'){
+        $sql = "SELECT * FROM tbl_employee";
+    }else{
+        $sql = "SELECT * FROM tbl_employee WHERE company = '{$level}'";
+    }
+}
 
-$sql = "SELECT * FROM tbl_employee";
 $result = $conn->query($sql);
 
 

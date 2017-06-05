@@ -202,6 +202,7 @@ require "includes/header.inc.php";
                     <div class="col-sm-4">
                         <select name="company" id="" class="selectpicker  form-control">
                             <option value="上海总部" selected="selected">上海总部</option>
+                            <option value="上海分公司">上海分公司</option>
                             <option value="北京办事处">北京办事处</option>
                             <option value="沈阳厂/沈阳分公司">沈阳厂/沈阳分公司</option>
                             <option value="成都分公司">成都分公司</option>
